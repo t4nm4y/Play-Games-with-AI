@@ -12,8 +12,11 @@ const TicTacToe = () => {
 
     useEffect(() => {
         bestMove();
-        console.log("useeff")
     },[]);
+
+    function resetBoard (){
+        window.location.reload()
+    }
 
     function checkWinner () {
         const lines = [
@@ -51,10 +54,8 @@ const TicTacToe = () => {
             setBoard(newBoard);
             setCurrentPlayer(ai);
             bestMove();
-            // setCurrentPlayer(human);
             console.log(board)
         }
-        // return;
     };
 
     function bestMove() {
@@ -123,12 +124,14 @@ const TicTacToe = () => {
     if (winner === 'tie') {
         status = "Draw!";
     }else if (winner) {
-        status = "Winner: " + winner;
+        if(winner===ai) status = "You Lose";
+        else status = "You Win!";
     }
-    else {
-        status = "Next player: " + (currentPlayer);
+    const renderStatus = () => {
+        if(status)
+        return(<div className={styles.status}>{status}</div>
+        );
     }
-
     const renderSquare = (index) => {
         if(board[index]===ai){
         return (
@@ -149,9 +152,14 @@ const TicTacToe = () => {
         
     };
 
+    
+
     return (
         <div className={styles.container}>
-            <div className={styles.status}>{status}</div>
+            <div className={styles.navBar}>
+                <button>Home</button>
+                <button onClick={resetBoard}>Reset</button>
+                </div>
             <div className={styles.board}>
             <div className={styles.board_vline1}></div>
             <div className={styles.board_vline2}></div>
@@ -173,6 +181,7 @@ const TicTacToe = () => {
                 {renderSquare(8)}
             </div>
             </div>
+            <div>{renderStatus(status)}</div>
         </div>
     );
 };

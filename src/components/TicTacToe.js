@@ -1,18 +1,12 @@
 import { useState, useEffect } from 'react';
-// import {ttt} from '../css'
-// import  styles from '../css/TicTacToe.module.css';
 import styles from '../css/TicTacToe.module.css';
 
 const TicTacToe = () => {
 
-    let [ai] = useState('X');
-    let [human] = useState('O');
-    let [currentPlayer, setCurrentPlayer] = useState(human);
+    let [xp] = useState('X');
+    let [op] = useState('O');
+    let [currentPlayer, setCurrentPlayer] = useState(xp);
     let [board,setBoard] = useState(Array(9).fill(null));
-
-    useEffect(() => {
-        bestMove();
-    },[]);
 
     function resetBoard (){
         window.location.reload()
@@ -48,84 +42,24 @@ const TicTacToe = () => {
     };
 
     function handleClick(index) {
-        if (checkWinner()===null && currentPlayer === human && board[index] == null) {
+        if (checkWinner()===null && board[index] == null) {
             const newBoard = board;
-            newBoard[index] = human;
+            newBoard[index] = currentPlayer;
             setBoard(newBoard);
-            setCurrentPlayer(ai);
-            bestMove();
-            console.log(board)
+            if(currentPlayer===xp) setCurrentPlayer(op);
+            else setCurrentPlayer(xp);
+            // console.log(board)
         }
     };
-
-    function bestMove() {
-        // AI to make its turn
-        let bestScore = -Infinity;
-        let move;
-        for (let i = 0; i < 9; i++) {
-            // Is the spot available?
-            if (board[i] == null) {
-                board[i] = ai;
-                let score = minimax(board, 0, false);
-                board[i] = null;
-                if (score > bestScore) {
-                    bestScore = score;
-                    move = i;
-                }
-            }
-        }
-        const newBoard = [...board];
-        newBoard[move] = ai;
-        setBoard(newBoard);
-        setCurrentPlayer(human);
-    }
-
-    let scores = {
-        X: 10,
-        O: -10,
-        tie: 0
-    };
-
-    function minimax(board, depth, isMaximizing) {
-        let result = checkWinner();
-        if (result !== null) {
-            return scores[result];
-        }
-
-        if (isMaximizing) {
-            let bestScore = -Infinity;
-            for (let i = 0; i < 9; i++) {
-                // Is the spot available?
-                if (board[i] == null) {
-                    board[i] = ai;
-                    let score = minimax(board, depth + 1, false);
-                    board[i] = null;
-                    bestScore = Math.max(score, bestScore);
-                }
-            }
-            return bestScore;
-        } else {
-            let bestScore = Infinity;
-            for (let i = 0; i < 9; i++) {
-                // Is the spot available?
-                if (board[i] === null) {
-                    board[i] = human;
-                    let score = minimax(board, depth + 1, true);
-                    board[i] = null;
-                    bestScore = Math.min(score, bestScore);
-                }
-            }
-            return bestScore;
-        }
-    }
 
     const winner = checkWinner();
     let status;
     if (winner === 'tie') {
         status = "Draw!";
-    }else if (winner) {
-        if(winner===ai) status = "You Lose";
-        else status = "You Win!";
+    }else if (winner===xp) {
+        status = "Winner: X";
+    } else if (winner===op) {
+        status = "Winner: O";
     }
     const renderStatus = () => {
         if(status)
@@ -133,7 +67,7 @@ const TicTacToe = () => {
         );
     }
     const renderSquare = (index) => {
-        if(board[index]===ai){
+        if(board[index]===xp){
         return (
             <div className={styles.square} onClick={() => handleClick(index)}>
                 <span class={styles.line}></span>
@@ -141,7 +75,7 @@ const TicTacToe = () => {
             </div>
         );
         }
-        else if(board[index]==human) {
+        else if(board[index]==op) {
             return (
                 <div className={styles.square} onClick={() => handleClick(index)}>
                     <span class={styles.circle}></span>
@@ -149,10 +83,7 @@ const TicTacToe = () => {
             ); 
         }
         else return <div className={styles.square} onClick={() => handleClick(index)}></div>
-        
     };
-
-    
 
     return (
         <div className={styles.container}>
@@ -160,6 +91,7 @@ const TicTacToe = () => {
                 <button>Home</button>
                 <button onClick={resetBoard}>Reset</button>
                 </div>
+                <div className={styles.currP}>Current Player: {currentPlayer}</div>
             <div className={styles.board}>
             <div className={styles.board_vline1}></div>
             <div className={styles.board_vline2}></div>
@@ -180,8 +112,8 @@ const TicTacToe = () => {
                 {renderSquare(7)}
                 {renderSquare(8)}
             </div>
+            <div>{renderStatus()}</div>
             </div>
-            <div>{renderStatus(status)}</div>
         </div>
     );
 };

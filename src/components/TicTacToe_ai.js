@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import styles from '../css/TicTacToe.module.css';
+import { useNavigate} from 'react-router-dom';
 
 const TicTacToe_ai = () => {
-
+    const reactNavigator = useNavigate();
     let [ai] = useState('X');
     let [human] = useState('O');
     let [currentPlayer, setCurrentPlayer] = useState(human);
@@ -14,6 +15,9 @@ const TicTacToe_ai = () => {
 
     function resetBoard() {
         window.location.reload()
+    }
+    function leaveRoom(){
+        reactNavigator('/');
     }
 
     function checkWinner() {
@@ -149,12 +153,17 @@ const TicTacToe_ai = () => {
         else return <div className={styles.square} onClick={() => handleClick(index)}></div>
 
     };
+    
+    // function leaveRoom() {
+    //     console.log("leave")
+    //     // reactNavigator('/');
+    // }
 
     return (
         <div className={styles.container}>
             <div className={styles.navBar}>
-                <button>Home</button>
-                <button onClick={resetBoard}>Reset</button>
+                <button className={styles.btn} onClick={leaveRoom}>Home</button>
+                <button className={styles.btn} onClick={resetBoard}>Reset</button>
             </div>
             <div className={styles.board}>
                 <div className={styles.board_vline1}></div>

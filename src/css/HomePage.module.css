@@ -1,0 +1,142 @@
+h1 h2{
+    color: #fff;
+}
+h2{
+  font-family: "Press Start 2P";
+  position: absolute;
+  margin-top: 50px;
+  color: rgb(255, 247, 91);
+  font-size: 30px;
+}
+:root {
+    --glow-color: rgb(217, 176, 255);
+    --glow-spread-color: rgba(191, 123, 255, 0.781);
+    --enhanced-glow-color: rgb(231, 206, 255);
+    --btn-color: rgb(100, 61, 136);
+  }
+.main_wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card_wrapper{
+    top: 20vh;
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    background-color:none;
+    align-items: center;
+}
+
+ .card {
+     display: flex;
+     position: relative;
+     width: 150px;
+     height: 250px;
+     margin: 50px;
+     background-color: #000000;
+     border-radius: 10px;
+     text-align:start;
+     align-items:end;
+     padding-left: 20px;
+     box-shadow: 0 0 1em .25em var(--glow-color),
+     0 0 4em 1em var(--glow-spread-color),
+     inset 0 0 .75em .25em var(--glow-color);
+    }
+    .card:hover{
+        transition: .3s ease-in-out;
+        box-shadow: none;
+        border: none;
+        overflow: visible;
+       /* box-shadow: var(--outer-shadow); */
+   }
+   .card:hover h1 {
+     visibility: hidden;
+     opacity: 0;
+    }
+    
+    .card:hover .btn_box {
+     visibility: visible;
+     opacity: 1;
+   }
+   .card::after {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 95%;
+    left: 0;
+    height: 35%;
+    width: 100%;
+    background-color: rgba(205, 154, 252, 0.496);
+    filter: blur(2em);
+    opacity: .6;
+    transform: perspective(1.9em) rotateX(35deg) scale(1, .6);
+   }
+   
+   .btn_box {
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     height: 0;
+     transform: translate(-50%, -50%);
+     border-radius: 10px;
+     background-color:transparent;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     visibility: hidden;
+     opacity: 0;
+     transition: 0.5s ease;
+   }
+   .play_btn:nth-child(1){
+    --glow-color: rgb(245, 250, 97);
+  --glow-spread-color: rgba(245, 250, 97, 0.781);
+  --enhanced-glow-color: rgb(245, 250, 97);
+  --btn-color: rgb(136, 132, 61);
+   }
+   .play_btn {
+    border: .25em solid var(--glow-color);
+    padding: 1em 3em;
+    color: var(--glow-color);
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--btn-color);
+    border-radius: 1em;
+    outline: none;
+    box-shadow: 0 0 1em .25em var(--glow-color),
+           0 0 4em 1em var(--glow-spread-color),
+           inset 0 0 .75em .25em var(--glow-color);
+    text-shadow: 0 0 .5em var(--glow-color);
+    position: relative;
+    
+   }
+   
+   .play_btn:hover {
+    transition: 0.3s;
+    color: var(--btn-color);
+    background-color: var(--glow-color);
+    box-shadow: 0 0 1em .25em var(--glow-color),
+           0 0 4em 2em var(--glow-spread-color),
+           inset 0 0 .75em .25em var(--glow-color);
+   }
+   
+   .play_btn:active {
+    transition: 0.1s;
+    box-shadow: 0 0 0.3em .25em var(--glow-color),
+           0 0 1em 0.5em var(--glow-spread-color),
+           inset 0 0 .5em .2em var(--glow-color);
+   }
+   .play_btn {
+     margin-top: 40px;
+   }
+   .card:hover .play_btn {
+     display: inline-block;
+     opacity: 1;
+   }
+   @media screen and (max-width: 500px){
+    .card_wrapper{
+        top:1vh;
+        flex-direction: column;
+    }
+}

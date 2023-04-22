@@ -19,6 +19,9 @@ const TicTacToeCard = () => {
   function goto_cn4_ai() {
     reactNavigator('/cn4_ai');
   }
+  function goto_cn4_ai_pruning() {
+    reactNavigator('/cn4_ai_pruning');
+  }
   function goto_othello() {
     reactNavigator('/othello');
   }
@@ -39,6 +42,7 @@ const TicTacToeCard = () => {
           <div className={style.btn_box}>
             <button className={style.play_btn} onClick={goto_cn4_ai}>AI</button>
             <button className={style.play_btn} onClick={goto_cn4}>Friend</button>
+            <button className={style.play_btn} onClick={goto_cn4_ai_pruning}>Fast AI (Pruning)</button>
           </div>
         </div>
         <div className={style.card}>

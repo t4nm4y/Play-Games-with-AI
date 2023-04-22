@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from '../css/Connect-4.module.css';
 import { useNavigate } from 'react-router-dom';
 
-const Connect4_ai = () => {
+const Connect4_ai_pruning = () => {
     const reactNavigator = useNavigate();
     let [p1] = useState(1); //p1 is ai
     let [p2] = useState(2);
@@ -94,7 +94,7 @@ const Connect4_ai = () => {
             tempI = nextSpace(j);
             if (tempI >= 0) {
                 board[tempI][j] = 1;
-                let score = minimax(board, depth, false, 1);
+                let score = minimax(board, depth, false, 1, -Infinity, Infinity);
                 board[tempI][j] = 0;
                 if (score > bestScore) {
                     bestScore = score;
@@ -127,13 +127,11 @@ const Connect4_ai = () => {
                 if ((countPieces(i, j, i + 4, j, player) === 1 && countPieces(i, j, i + 4, j, 0) === 3) || (countPieces(i, j, i, j + 4, player) === 1 && countPieces(i, j, i, j + 4, 0) === 3) ||
                     (countDiagonal(i, j, 0, player) === 1 && countDiagonal(i, j, 1, 0) === 3)) {
                     score += 1;
-
                 }
 
                 if ((countPieces(i, j, i + 4, j, player2) === 3 && countPieces(i, j, i + 4, j, 0) === 1) || (countPieces(i, j, i, j + 4, player2) === 3 && countPieces(i, j, i, j + 4, 0) === 1) ||
                     (countDiagonal(i, j, 0, player2) === 3 && countDiagonal(i, j, 1, 0) === 1)) {
                     score -= 1000;
-
                 }
 
                 if ((countPieces(i, j, i + 4, j, player2) === 2 && countPieces(i, j, i + 4, j, 0) === 2) || (countPieces(i, j, i, j + 4, player2) === 2 && countPieces(i, j, i, j + 4, 0) === 2) ||
@@ -182,7 +180,7 @@ const Connect4_ai = () => {
         return pieces;
     }
 
-    function minimax(board, depth, isMaximizing, nr_moves) {
+    function minimax(board, depth, isMaximizing, nr_moves, alpha, beta) {
         let result = checkWinner();
         if (result > 0) {
             return scores[result] - 20 * nr_moves;
@@ -199,9 +197,14 @@ const Connect4_ai = () => {
                 let tempI = nextSpace(j);
                 if (tempI < h && tempI > -1) {
                     board[tempI][j] = 1;
-                    let score = minimax(board, depth - 1, false, nr_moves + 1);
+                    let score = minimax(board, depth - 1, false, nr_moves + 1, alpha, beta);
                     board[tempI][j] = 0;
                     bestScore = Math.max(score, bestScore);
+                    //pruning---------------------------------------------
+                    alpha = Math.max(bestScore, alpha);
+                    if (alpha >= beta) {
+                      break
+                    }
                 }
             }
             return bestScore;
@@ -212,9 +215,14 @@ const Connect4_ai = () => {
                 let tempI = nextSpace(j);
                 if (tempI < h && tempI > -1) {
                     board[tempI][j] = 2;
-                    let score = minimax(board, depth - 1, true, nr_moves + 1);
+                    let score = minimax(board, depth - 1, true, nr_moves + 1, alpha, beta);
                     board[tempI][j] = 0;
                     bestScore = Math.min(score, bestScore);
+                    //pruning-----------------------------------------
+                    beta = Math.min(bestScore, beta);
+                    if (alpha >= beta) {
+                         break
+                    }
                 }
             }
             return bestScore;
@@ -259,6 +267,7 @@ const Connect4_ai = () => {
                 <button className={styles.btn} onClick={leaveRoom}>Home</button>
                 <button className={styles.btn} onClick={resetBoard}>Reset</button>
             </div>
+            <div className={styles.currP}>Alpha-Beta Pruning</div>
             <div className={styles.board}>
                 <div className={styles.board_vline}></div>
                 <div className={styles.board_vline}></div>
@@ -337,5 +346,5 @@ const Connect4_ai = () => {
     );
 };
 
-export default Connect4_ai;
+export default Connect4_ai_pruning;
 

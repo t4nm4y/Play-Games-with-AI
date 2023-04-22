@@ -34,7 +34,7 @@ const Connect4_ai_pruning = () => {
     }
 
     function nextSpace(x) { //finds the next space (from the bottom)
-        console.log("col:", x);
+        // console.log("col:", x);
         for (let y = h - 1; y >= 0; y--) {
             if (board[y][x] === 0) {
                 return y;

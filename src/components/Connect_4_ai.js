@@ -34,7 +34,7 @@ const Connect4_ai = () => {
     }
 
     function nextSpace(x) { //finds the next space (from the bottom)
-        console.log("col:", x);
+        // console.log("col:", x);
         for (let y = h - 1; y >= 0; y--) {
             if (board[y][x] === 0) {
                 return y;
@@ -78,7 +78,7 @@ const Connect4_ai = () => {
         }
     };
     //___BEST MOVE  MINI MAX ALGO___________________________________________________________________________________________
-    let depth = 5;
+    let depth = 6;
     let scores = {
         1: Infinity,
         2: -Infinity,

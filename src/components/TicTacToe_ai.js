@@ -9,9 +9,9 @@ const TicTacToe_ai = () => {
     let [currentPlayer, setCurrentPlayer] = useState(human);
     let [board, setBoard] = useState(Array(9).fill(null));
 
-    useEffect(() => {
-        bestMove();
-    }, []);
+    // useEffect(() => {
+    //     bestMove();
+    // }, []);
 
     function resetBoard() {
         window.location.reload()
@@ -56,7 +56,6 @@ const TicTacToe_ai = () => {
             setBoard(newBoard);
             setCurrentPlayer(ai);
             bestMove();
-            console.log(board)
         }
     };
 
@@ -153,11 +152,6 @@ const TicTacToe_ai = () => {
         else return <div className={styles.square} onClick={() => handleClick(index)}></div>
 
     };
-    
-    // function leaveRoom() {
-    //     console.log("leave")
-    //     // reactNavigator('/');
-    // }
 
     return (
         <div className={styles.container}>

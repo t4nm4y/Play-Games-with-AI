@@ -2,10 +2,10 @@
   --circle-color: rgb(245, 250, 97);
   --circle-sizes: 0px 0px 50px 0px;
   --cross-color:#d982ff;
-  --sq-ht:120px;
   --board-line-color:#ffffff65;
-  --board-line-w:3px;
+  --sq-h-ttt:120px;
 }
+
 .navBar{
   margin-top:5vh;
   display: flex;
@@ -101,9 +101,9 @@
   font-size: 50px;
   color: #ffffff;
   position: absolute;
-  width: calc(3*var(--sq-ht));
+  width: calc(3*var(--sq-h-ttt));
   height: 100px;
-  top: calc(var(--sq-ht) + 5px);
+  top: calc(var(--sq-h-ttt) + 5px);
   left: 0;
   text-align: center;
 /* glassmorphism */
@@ -116,39 +116,39 @@ border-radius: 10px;
 .board{
   margin-top: 16vh;
   position: relative;
-  width: calc( 3 * var(--sq-ht) );
+  width: calc( 3 * var(--sq-h-ttt) );
 }
 .board_vline1{
   position: absolute;
-  height: calc(3*var(--sq-ht));
+  height: calc(3*var(--sq-h-ttt));
   width: var(--board-line-w);
-  left: var(--sq-ht);
+  left: var(--sq-h-ttt);
   border-radius: 10px;
   background-color: var(--board-line-color);
 }
 .board_vline2{
   position: absolute;
-  height: calc(3*var(--sq-ht));
+  height: calc(3*var(--sq-h-ttt));
   width: var(--board-line-w);
-  left: calc( 2*var(--sq-ht) );
+  left: calc( 2*var(--sq-h-ttt) );
   border-radius: 10px;
   background-color: var(--board-line-color);
 }
 .board_hline1{
   position: absolute;
-  width: calc(3*var(--sq-ht));
+  width: calc(3*var(--sq-h-ttt));
   height: var(--board-line-w);
   left: 0;
-  top: var(--sq-ht);
+  top: var(--sq-h-ttt);
   border-radius: 10px;
   background-color: var(--board-line-color);
 }
 .board_hline2{
   position: absolute;
-  width: calc(3*var(--sq-ht));
+  width: calc(3*var(--sq-h-ttt));
   height: var(--board-line-w);
   left: 0;
-  top: calc( 2*var(--sq-ht) );
+  top: calc( 2*var(--sq-h-ttt) );
   border-radius: 10px;
   background-color: var(--board-line-color);
 }
@@ -158,8 +158,8 @@ border-radius: 10px;
 }
 
 .square{
-  min-height: var(--sq-ht);
-  min-width: var(--sq-ht);
+  min-height: var(--sq-h-ttt);
+  min-width: var(--sq-h-ttt);
   position: relative;
   background-color: transparent;
   display: flex;
@@ -175,7 +175,7 @@ border-radius: 10px;
 .line {
   position: absolute;
   border-radius: 10px;
-  left: calc(0.5*var(--sq-ht));
+  left: calc(0.5*var(--sq-h-ttt));
   width: 8px;
   height: 90px;
   background-color:var(--cross-color);
@@ -194,7 +194,7 @@ border-radius: 10px;
   display: flex;
   align-items: center;
   position: absolute;
-  left: calc(0.15*var(--sq-ht));
+  left: calc(0.15*var(--sq-h-ttt));
   box-shadow: var(--circle-sizes) var(--circle-color);
   width: 70px;
   height: 70px;

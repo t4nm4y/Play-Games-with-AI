@@ -38,7 +38,7 @@ const TicTacToeCard = () => {
           </div>
         </div>
         <div className={style.card}>
-          <h1>Connect 4</h1>
+          <h1>Connect&nbsp; 4</h1>
           <div className={style.btn_box}>
             <button className={style.play_btn} onClick={goto_cn4_ai}>AI</button>
             <button className={style.play_btn} onClick={goto_cn4}>Friend</button>

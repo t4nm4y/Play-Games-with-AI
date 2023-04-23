@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from '../css/Connect-4.module.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -86,13 +86,23 @@ const Connect4 = () => {
         status = "Winner: Player2";
     }
     const renderStatus = () => {
-        if (status)
+        if (status){
+        if (winner === p1){
             return (<div className={styles.status}>
                 <div className={styles.status_wrap}>
                 Winner: <span className={styles.status_p1}></span>
                 </div>
                 </div>
             );
+        }
+        else
+        return (<div className={styles.status}>
+            <div className={styles.status_wrap}>
+            Winner: <span className={styles.status_p2}></span>
+            </div>
+            </div>
+        );
+        }
     }
     const renderCircle = (i, j) => {
         if (board[i][j] === p1) {

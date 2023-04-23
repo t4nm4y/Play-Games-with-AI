@@ -17,7 +17,7 @@ const Connect4_ai_pruning = () => {
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0]
     ]);
-
+    console.log("ggggggg")
     useEffect(() => {
         bestMove();
     }, []);

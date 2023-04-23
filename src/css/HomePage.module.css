@@ -18,11 +18,13 @@ h2{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
 .card_wrapper{
     top: 20vh;
     display: flex;
-    position: relative;
+    position: absolute;
     flex-direction: row;
     background-color:none;
     align-items: center;
@@ -140,9 +142,16 @@ h2{
      display: inline-block;
      opacity: 1;
    }
-   @media screen and (max-width: 500px){
+   @media screen and (max-width: 750px){
     .card_wrapper{
-        top:1vh;
+        top:15vh;
         flex-direction: column;
+    }
+    h2{
+      font-family: "Press Start 2P";
+      position: absolute;
+      margin-top: 50px;
+      color: rgb(255, 247, 91);
+      font-size: 20px;
     }
 }

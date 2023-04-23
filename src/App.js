@@ -5,6 +5,7 @@ import HomePage from './components/HomePage'
 import Connect4 from './components/Connect_4'
 import Connect4_ai from './components/Connect_4_ai'
 import Othello from './components/Othello';
+import Tem_page from './components/temp';
 import Connect4_ai_pruning from './components/Connect_4_ai_pruning';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path='/cn4_ai' element={<Connect4_ai/>}></Route>
           <Route path='/cn4_ai_pruning' element={<Connect4_ai_pruning/>}></Route>
           <Route path='/othello' element={<Othello/>}></Route>
+          <Route path='/temp' element={<Tem_page/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

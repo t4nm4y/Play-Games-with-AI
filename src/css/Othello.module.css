@@ -1,5 +1,6 @@
 :root {
-  --sq-ht-othello:70px;
+  --sq-ht-othello:65px;
+  --circle-rad-othello:40px;
 }
 .navBar{
   margin-top:2vh;
@@ -210,8 +211,8 @@ border-radius: 10px;
   align-items: center;
   position: absolute;
   left: calc(0.15*var(--sq-ht-othello));
-  width: 40px;
-  height: 40px;
+  width: var(--circle-rad-othello);
+  height: var(--circle-rad-othello);
   border-radius: 50%;
 }
 .circle_p3{
@@ -259,7 +260,7 @@ border-radius: 10px;
   display: flex;
   flex-direction: row;
   left:calc(50vw - 100px);
-  bottom:calc(2vh);
+  bottom:calc(2.5vh);
   font-size: 15px;
   padding: 0.7em 2.7em;
   letter-spacing: 0.06em;
@@ -273,4 +274,12 @@ border-radius: 10px;
   background: linear-gradient(to right, rgba(27, 253, 155, 0.408) 1%, transparent 40%,transparent 60% , rgba(27, 253, 155, 0.441) 100%);
   color: var(--green);
   box-shadow: inset 0 0 10px rgba(27, 253, 156, 0.4), 0 0 9px 3px rgba(27, 253, 156, 0.1);
+}
+@media screen and (max-width: 650px){
+  :root {
+    --sq-ht-othello:50px;
+    --circle-rad-othello:20px;
+    --sq-ht-connect4:55px;
+    --circle-rad:28px;
+  }
 }

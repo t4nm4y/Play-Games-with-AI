@@ -5,6 +5,7 @@
   --sq-ht-connect4:90px;
   --board-line-color:#ffffff65;
   --board-line-w:3px;
+  --circle-rad:55px;
 }
 .navBar{
   margin-top:2vh;
@@ -197,8 +198,8 @@ border-radius: 10px;
   align-items: center;
   position: absolute;
   left: calc(0.15*var(--sq-ht-connect4));
-  width: 55px;
-  height: 55px;
+  width: var(--circle-rad);
+  height: var(--circle-rad);
   border-radius: 50%;
 }
 .p1,

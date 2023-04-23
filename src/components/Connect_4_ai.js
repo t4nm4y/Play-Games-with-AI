@@ -17,7 +17,6 @@ const Connect4_ai = () => {
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0]
     ]);
-
     useEffect(() => {
         bestMove();
     }, []);
@@ -78,7 +77,7 @@ const Connect4_ai = () => {
         }
     };
     //___BEST MOVE  MINI MAX ALGO___________________________________________________________________________________________
-    let depth = 6;
+    let depth = 5;
     let scores = {
         1: Infinity,
         2: -Infinity,

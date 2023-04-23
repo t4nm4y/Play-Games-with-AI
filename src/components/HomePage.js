@@ -25,6 +25,9 @@ const TicTacToeCard = () => {
   function goto_othello() {
     reactNavigator('/othello');
   }
+  function goto_temp() {
+    reactNavigator('/temp');
+  }
 
   return (
     <div className={style.main_wrapper}>
@@ -49,7 +52,7 @@ const TicTacToeCard = () => {
           <h1>Othello</h1>
           <div className={style.btn_box}>
             <button className={style.play_btn} onClick={goto_othello}>AI</button>
-            <button className={style.play_btn} onClick={goto_othello}>Friend</button>
+            <button className={style.play_btn} onClick={goto_temp}>testing</button>
           </div>
         </div>
       </div>

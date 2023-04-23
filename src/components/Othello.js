@@ -2,18 +2,17 @@ import { useState } from 'react';
 import styles from '../css/Othello.module.css';
 import { useNavigate } from 'react-router-dom';
 
-const players = ['B', 'W'];
-    let counts=[2,2], available=[],currentPlayer=0,board;
-    const human = [true, false];
-    let levelAI = [6, 6];
+let counts=[2,2];
 
 const Othello = () => {
-    const reactNavigator = useNavigate();
-    // let [p1] = useState('W');
-    // let [p2] = useState('B');
-    // let [currentPlayer, setCurrentPlayer] = useState(p1);
-    
-    const [board, setBoard] = useState([
+  //Ai is white
+  const players = ['B', 'W'];
+  let available=[],currentPlayer=0;
+  const human = [true, false];
+  let levelAI = [6, 6];
+
+  const reactNavigator = useNavigate();
+    let [board, setBoard] = useState([
         ['', '', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '', ''],
         ['', '', 'A', 'A', 'A', 'A', '', ''],
@@ -23,7 +22,6 @@ const Othello = () => {
         ['', '', '', '', '', '', '', ''],
         ['', '', '', '', '', '', '', ''],
     ]);
-    //Ai is white
     
     for (let j = 0; j < 8; j++) {
         for (let i = 0; i < 8; i++) {
@@ -46,17 +44,12 @@ const Othello = () => {
         return null;
       }
       function reversePawn(i, j, player) {
-        // const newBoard = [...board];
         board[i][j] = players[player];
-        // setBoard(newBoard);
         counts[player]++;
         counts[player ^ 1]--;
       }
       function addPawn(i, j, player) {
-        // const newBoard = [...board];
         board[i][j] = players[player];
-        // setBoard(newBoard);
-        // console.log("moved:", board
         counts[player]++;
         for (let dj = -1; dj <= 1; dj++) {
           let j2 = j + dj;
@@ -65,9 +58,7 @@ const Othello = () => {
               let i2 = i + di;
               if (boardAt(i2, j2) === '') {
                 available.push([i2, j2]);
-                // const newBoard = [...board];
                 board[i2][j2] = 'A';
-                // setBoard(newBoard);
               }
             }
           }
@@ -101,42 +92,37 @@ const Othello = () => {
       }
 
     function nextTurn() {
-        console.log("entered next");
         let notAvailable = false;
         if (hasAvailablePlayer(currentPlayer)) {
           if (human[currentPlayer]) {
-            console.log("human")
             return null;
         }
-        console.log("not human")
           available.sort(() => Math.random() - 0.5);
-          const oldBoard=[...board]
-          console.log(oldBoard);
           let index = alphabetaAI(currentPlayer, levelAI[currentPlayer], -Infinity, Infinity, false);
-          setBoard(oldBoard)
           let spot = available.splice(index, 1)[0];
           let i = spot[0];
           let j = spot[1];
-          console.log("callint play at from nxt turn");
           playAt(i, j, currentPlayer);
-          console.log("came out")
-        //   currentPlayer = currentPlayer ^ 1;
+          const newBoard=[...board]
+          setBoard(newBoard)
         } else {
           notAvailable = true;
         }
-        currentPlayer = currentPlayer ^ 1;
         let result = checkWinner();
-        console.log("resis",result)
         if (result !== null) {
             console.log("resis if not null",result)
             return;
         } else {
-        //   currentPlayer = currentPlayer ^ 1;
-          console.log("nxt:",currentPlayer);
+          currentPlayer = currentPlayer ^ 1;
           if (!human[currentPlayer] || !hasAvailablePlayer(currentPlayer)) {
             setTimeout(nextTurn, 500);
           }
         }
+        // currentPlayer = currentPlayer ^ 1;
+        //   if (!human[currentPlayer] || !hasAvailablePlayer(currentPlayer)) {
+        //     // setTimeout(nextTurn, 500);
+        //     nextTurn();
+        //   }
       }
       
       function alphabetaAI(player, level, alpha, beta, next) {
@@ -168,9 +154,9 @@ const Othello = () => {
         }
       
         let saveAvailable = [...available];
-        // let saveBoard = board.map(row => row.slice(0)); // Deep copy
-        const saveBoard = [...board]; // Deep copy
+        let saveBoard = board.map(row => row.slice(0)); // Deep copy
         let saveCounts = [...counts];
+        // let saveCounts = counts.map(row => counts.slice(0));
       
         for (let spotIndex = 0; spotIndex < saveAvailable.length; spotIndex++) {
           let spot = saveAvailable[spotIndex];
@@ -185,10 +171,10 @@ const Othello = () => {
               index = spotIndex;
             }
             available = [...saveAvailable];
-            setBoard(saveBoard) //restore
-            console.log("restore", board)
-            // board = saveBoard.map(row => row.slice(0)); // Deep restore
-            counts = [...saveCounts];
+            board = saveBoard.map(row => row.slice(0)); // Deep restore
+            // counts = [...saveCounts];
+            // counts = saveCounts.map(row => row.slice(0)); // Deep restore
+            counts = saveCounts;
             if (cut(score)) {
               break;
             }
@@ -206,9 +192,9 @@ const Othello = () => {
       }
 
       function checkWinner() {
-          if ((available.length == 0) || (!hasAvailablePlayer(0) && !hasAvailablePlayer(1))) {
-              console.log("count of B:",counts[0]);
-              console.log("count of W:",counts[1]);
+        // console.log("count of B:",counts[0]);
+        // console.log("count of W:",counts[1]);
+        if ((available.length == 0) || (!hasAvailablePlayer(0) && !hasAvailablePlayer(1))) {
           if (counts[0] > counts[1]) {
             return 'B';
           } else if (counts[1] > counts[0]) {
@@ -230,8 +216,6 @@ const Othello = () => {
       }
 
       function playAt(i, j, player) {
-        //   console.log("play_at")
-        console.log("player at playat",player)
         addPawn(i, j, player);
         let otherPlayer = players[player ^ 1];
         for (let dj = -1; dj <= 1; dj++) {
@@ -253,32 +237,18 @@ const Othello = () => {
       }
 
     function handleClick(i, j) {
-        // if (checkWinner() === 0) {
-        //     i=nextSpace(j);
-        //     // console.log(t);
-        //     if(i<0) return null;
-        //     const newBoard = [...board];
-        //     newBoard[i][j] = currentPlayer;
-        //     setBoard(newBoard);
-        //     // console.log(board)
-        //     if (currentPlayer === p1) setCurrentPlayer(p2);
-        //     else setCurrentPlayer(p1);
-        // }
-
-        if(checkWinner()===null && human[currentPlayer] && board[i][j]==='A'){
+        if(human[currentPlayer] && board[i][j]==='A' && checkWinner()===null){
         let index = available.findIndex(spot => spot[0] == i && spot[1] == j);
         if (index >= 0) {
             let index = available.findIndex(spot => spot[0] == i && spot[1] == j);
             if (isAvailablePlayer(i, j, currentPlayer)) {
                 available.splice(index, 1);
-                console.log("calling playat from click");
                 playAt(i, j, currentPlayer);
-                console.log("came out of play at click");
                 const newBoard=[...board];
                 setBoard(newBoard);
                 currentPlayer = currentPlayer ^ 1;
-                // console.log(currentPlayer)
-                setTimeout(nextTurn, 500);
+                nextTurn();
+                // setTimeout(nextTurn, 500);
             }
         }
     }
@@ -353,22 +323,14 @@ const Othello = () => {
         return (corners(player) - corners(player ^ 1)) * 10000 + (countAvailablePlayer(player) - countAvailablePlayer(player ^ 1)) * 100 + (counts[player] - counts[player ^ 1]);
       }
     const winner = checkWinner();
-    let status;
-    if (winner === -1) {
-        status = "Draw!";
-    } else if (winner === 'W') {
-        status = "Winner: Player1";
-    } else if (winner === 'B') {
-        status = "Winner: Player2";
-    }
     const renderStatus = () => {
-        if (status) {
+        if (winner!==null) {
             console.log("got result")
             if (winner === 'W') {
                 return (<div className={styles.status}>
                     <div className={styles.status_wrap}>
-                        {/* Winner{`${Math.max(counts)} - ${Math.min(counts)}`}: <span className={styles.status_p1}></span> */}
-                        Winner: <span className={styles.status_p1}></span>
+                        {/* Winner: <span className={styles.status_p1}></span> */}
+                        You Lose :(
                     </div>
                 </div>
                 );
@@ -384,7 +346,8 @@ const Othello = () => {
             else
                 return (<div className={styles.status}>
                     <div className={styles.status_wrap}>
-                        Winner: <span className={styles.status_p2}></span>
+                        {/* Winner: <span className={styles.status_p2}></span> */}
+                        You Win!
                     </div>
                 </div>
                 );
@@ -431,7 +394,7 @@ const Othello = () => {
                 <button className={styles.btn} onClick={leaveRoom}>Home</button>
                 <button className={styles.btn} onClick={resetBoard}>Reset</button>
             </div>
-            <div className={styles.currP}>Current Player: {renderCurrPlayer()}</div>
+            {/* <div className={styles.currP}>Current Player: {renderCurrPlayer()}</div> */}
             <div className={styles.board}>
                 <div className={styles.board_vline}></div>
                 <div className={styles.board_vline}></div>

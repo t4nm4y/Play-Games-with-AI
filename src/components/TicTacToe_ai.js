@@ -9,9 +9,9 @@ const TicTacToe_ai = () => {
     let [currentPlayer, setCurrentPlayer] = useState(human);
     let [board, setBoard] = useState(Array(9).fill(null));
 
-    // useEffect(() => {
-    //     bestMove();
-    // }, []);
+    useEffect(() => {
+        bestMove();
+    }, []);
 
     function resetBoard() {
         window.location.reload()

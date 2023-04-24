@@ -7,7 +7,7 @@ import Connect4_ai from './components/Connect_4_ai'
 import Connect4_ai_pruning from './components/Connect_4_ai_pruning';
 import Othello from './components/Othello';
 import Othello_ai from './components/Othello_ai';
-import './App.css';
+// import './App.css';
 
 function App() {
   return (

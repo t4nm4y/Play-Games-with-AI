@@ -89,6 +89,9 @@ const Connect4_ai_pruning = () => {
             // Is the spot available?
             tempI = nextSpace(j);
             if (tempI >= 0) {
+                if (move == null) {
+                    move = j;
+                  }
                 board[tempI][j] = 1;
                 let score = minimax(board, depth, false, 1, -Infinity, Infinity);
                 board[tempI][j] = 0;
@@ -98,9 +101,8 @@ const Connect4_ai_pruning = () => {
                 }
             }
         }
-        tempI = nextSpace(move);
         const newBoard = [...board];
-        newBoard[tempI][move] = p1;
+        newBoard[nextSpace(move)][move] = p1;
         setBoard(newBoard);
         setCurrentPlayer(p2);
     }

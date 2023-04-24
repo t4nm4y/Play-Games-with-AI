@@ -100,6 +100,9 @@ const Connect4_ai = () => {
             // Is the spot available?
             tempI = nextSpace(j);
             if (tempI >= 0) {
+                if (move == null) {
+                    move = j;
+                  }
                 board[tempI][j] = 1;
                 let score = minimax(board, depth, false, 1);
                 board[tempI][j] = 0;

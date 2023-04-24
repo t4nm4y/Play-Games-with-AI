@@ -1,0 +1,21 @@
+:root {
+    --circlep1-color: rgb(191, 123, 255);
+    --circlep2-color: rgb(245, 250, 97);
+    --circle-sizes: 0px 0px 30px 0px;
+    --sq-ht-connect4:90px;
+    --board-line-color:#ffffff65;
+    --board-line-w:3px;
+    --circle-rad:55px;
+
+    --circle-color: rgb(245, 250, 97);
+    --cross-color:#d982ff;
+    --sq-h-ttt:120px;
+
+    --glow-color: rgb(217, 176, 255);
+    --glow-spread-color: rgba(191, 123, 255, 0.781);
+    --enhanced-glow-color: rgb(231, 206, 255);
+    --btn-color: rgb(100, 61, 136);
+
+    --sq-ht-othello:65px;
+    --circle-rad-othello:36px;
+  }

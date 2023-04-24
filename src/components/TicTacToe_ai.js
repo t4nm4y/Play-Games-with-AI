@@ -125,7 +125,7 @@ const TicTacToe_ai = () => {
     if (winner === 'tie') {
         status = "Draw!";
     } else if (winner) {
-        if (winner === ai) status = "You Lose";
+        if (winner === ai) status = "You Lose :(";
         else status = "You Win!";
     }
     const renderStatus = () => {

@@ -1,7 +1,3 @@
-:root {
-  --sq-ht-othello:65px;
-  --circle-rad-othello:40px;
-}
 .navBar{
   margin-top:2vh;
   display: flex;
@@ -259,7 +255,7 @@ border-radius: 10px;
   --green: #1BFD9C;
   display: flex;
   flex-direction: row;
-  left:calc(50vw - 100px);
+  left:calc(50vw - 105px);
   bottom:calc(2.5vh);
   font-size: 15px;
   padding: 0.7em 2.7em;

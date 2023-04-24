@@ -52,7 +52,6 @@ const Connect4 = () => {
     }
 
     function nextSpace(x) { //finds the next space (from the bottom)
-        console.log("col:",x);
         for (let y = h - 1; y >= 0; y--) {
             if (board[y][x] === 0) {
                 return y;
@@ -64,15 +63,12 @@ const Connect4 = () => {
     function handleClick(i,j) {
         if (checkWinner() === 0) {
             i=nextSpace(j);
-            // console.log(t);
             if(i<0) return null;
             const newBoard = [...board];
             newBoard[i][j] = currentPlayer;
             setBoard(newBoard);
-            // console.log(board)
             if (currentPlayer === p1) setCurrentPlayer(p2);
             else setCurrentPlayer(p1);
-            // console.log(board)
         }
     };
 

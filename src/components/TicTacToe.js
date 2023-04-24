@@ -52,7 +52,6 @@ const TicTacToe = () => {
             setBoard(newBoard);
             if(currentPlayer===xp) setCurrentPlayer(op);
             else setCurrentPlayer(xp);
-            // console.log(board)
         }
     };
 

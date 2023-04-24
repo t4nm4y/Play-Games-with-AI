@@ -17,7 +17,6 @@ const Connect4_ai_pruning = () => {
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0]
     ]);
-    console.log("ggggggg")
     useEffect(() => {
         bestMove();
     }, []);
@@ -66,15 +65,12 @@ const Connect4_ai_pruning = () => {
     function handleClick(i, j) {
         if (checkWinner() === 0 && currentPlayer === p2) {
             i = nextSpace(j);
-            // console.log(t);
             if (i < 0) return null;
             const newBoard = board;
             newBoard[i][j] = currentPlayer;
             setBoard(newBoard);
-            // console.log(board)
             setCurrentPlayer(p1);
             bestMove();
-            // console.log(board)
         }
     };
     //___BEST MOVE  MINI MAX ALGO___________________________________________________________________________________________
@@ -235,7 +231,7 @@ const Connect4_ai_pruning = () => {
     if (winner === -1) {
         status = "Draw!";
     } else if (winner) {
-        if (winner === p1) status = "You Lose";
+        if (winner === p1) status = "You Lose :(";
         else status = "You Win!";
     }
     const renderStatus = () => {

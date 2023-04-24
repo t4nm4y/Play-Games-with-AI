@@ -1,8 +1,20 @@
 import { useState, useEffect } from 'react';
 import styles from '../css/Connect-4.module.css';
 import { useNavigate } from 'react-router-dom';
+import '../css/Menu.css';
+import { CSSTransition } from "react-transition-group";
 
 const Connect4_ai = () => {
+// let depth=5;
+    const [isOpen, setIsOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+  const [depth, setDifficulty] = useState(5);
+  const handleDifficultyChange = (e) => {
+    const val = parseInt(e.target.value);
+    setDifficulty(val);
+  };
     const reactNavigator = useNavigate();
     let [p1] = useState(1); //p1 is ai
     let [p2] = useState(2);
@@ -74,7 +86,6 @@ const Connect4_ai = () => {
         }
     };
     //___BEST MOVE  MINI MAX ALGO___________________________________________________________________________________________
-    let depth = 5;
     let scores = {
         1: Infinity,
         2: -Infinity,
@@ -329,6 +340,53 @@ const Connect4_ai = () => {
                 </div>
                 <div>{renderStatus()}</div>
             </div>
+            <>
+        <button className="diff_btn" onClick={toggleMenu}>AI Difficulty {depth}</button>
+        <CSSTransition
+          in={isOpen}
+          classNames="menu"
+          timeout={200}
+          unmountOnExit
+        >
+          <div className="menu-container">
+            <div className="container">
+              <form>
+                <label>
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="4"
+                    checked={depth === 4}
+                    onChange={handleDifficultyChange}
+                  />
+                  <span>Easy</span>
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="5"
+                    checked={depth === 5}
+                    onChange={handleDifficultyChange}
+                  />
+                  <span>Medium</span>
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="radio"
+                    value="6"
+                    checked={depth === 6}
+                    onChange={handleDifficultyChange}
+                  />
+                  <span>Hard</span>
+                </label>
+              </form>
+            </div>
+          </div>
+        </CSSTransition>
+        {isOpen && <div className="overlay" onClick={toggleMenu} />}
+      </>
         </div>
     );
 };

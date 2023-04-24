@@ -2,7 +2,7 @@
   --circlep1-color: rgb(191, 123, 255);
   --circlep2-color: rgb(245, 250, 97);
   --circle-sizes: 0px 0px 30px 0px;
-  --sq-ht-connect4:90px;
+  --sq-ht-connect4:85px;
   --board-line-color:#ffffff65;
   --board-line-w:3px;
   --circle-rad:55px;
@@ -26,6 +26,7 @@
   align-items: center;
 }
 .btn {
+  cursor: pointer;
   display: flex;
   position: relative;
   border: .25em solid var(--glow-color);
@@ -247,12 +248,11 @@ border-radius: 10px;
   --green: #1BFD9C;
   display: flex;
   flex-direction: row;
-  left:calc(50vw - 108px);
+  margin-top: 40px;
   bottom:calc(2vh);
   font-size: 15px;
   padding: 0.7em 2.7em;
   letter-spacing: 0.06em;
-  position: absolute;
   font-family: inherit;
   border-radius: 0.6em;
   overflow: hidden;

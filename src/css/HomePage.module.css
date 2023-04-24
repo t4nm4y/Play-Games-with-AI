@@ -2,7 +2,6 @@
   --circlep1-color: rgb(191, 123, 255);
   --circlep2-color: rgb(245, 250, 97);
   --circle-sizes: 0px 0px 30px 0px;
-  --sq-ht-connect4:90px;
   --board-line-color:#ffffff65;
   --board-line-w:3px;
   --circle-rad:55px;
@@ -21,9 +20,11 @@
 }
 h1,h2{
     color: #fff;
+  font-family: "Press Start 2P";
+  font-size: 20px;
+  line-height: 35px;
 }
 h2{
-  font-family: "Press Start 2P";
   position: absolute;
   margin-top: 50px;
   color: rgb(255, 247, 91);
@@ -49,9 +50,10 @@ h2{
      display: flex;
      position: relative;
      width: 150px;
-     height: 250px;
+     height: 240px;
      margin: 50px;
-     background-color: #000000;
+     background-color: none;
+     padding-bottom: 15px;
      border-radius: 10px;
      align-items:flex-end;
      padding-left: 20px;
@@ -96,7 +98,7 @@ h2{
      height: 0;
      transform: translate(-50%, -50%);
      border-radius: 10px;
-     background-color:transparent;
+     background-color:none;
      display: flex;
      flex-direction: column;
      justify-content: center;
@@ -118,6 +120,7 @@ h2{
   --btn-color: rgb(136, 98, 61);
    }
    .play_btn {
+    cursor: pointer;
     border: .25em solid var(--glow-color);
     padding: 1em 3em;
     color: var(--glow-color);

@@ -23,6 +23,7 @@
  }
  
  .btn::after {
+  cursor: pointer;
   pointer-events: none;
   content: "";
   position: absolute;
@@ -70,7 +71,6 @@
 }
 .currP{
   --green: #1BFD9C;
-  left:calc(50vw - 100px);
   bottom:calc(10vh);
   font-size: 15px;
   padding: 0.7em 2.7em;

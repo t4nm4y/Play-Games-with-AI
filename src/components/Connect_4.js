@@ -134,7 +134,7 @@ const Connect4 = () => {
                 <button className={styles.btn} onClick={leaveRoom}>Home</button>
                 <button className={styles.btn} onClick={resetBoard}>Reset</button>
             </div>
-            <div className={styles.currP}>Current Player: {renderCurrPlayer()}</div>
+            
             <div className={styles.board}>
                 <div className={styles.board_vline}></div>
                 <div className={styles.board_vline}></div>
@@ -209,6 +209,7 @@ const Connect4 = () => {
                 </div>
                 <div>{renderStatus()}</div>
             </div>
+            <div className={styles.currP}>Current Player: {renderCurrPlayer()}</div>
         </div>
     );
 };

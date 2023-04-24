@@ -2,7 +2,7 @@
   --circlep1-color: rgb(191, 123, 255);
   --circlep2-color: rgb(245, 250, 97);
   --circle-sizes: 0px 0px 30px 0px;
-  --sq-ht-connect4:90px;
+  /* --sq-ht-connect4:90px; */
   --board-line-color:#ffffff65;
   --board-line-w:3px;
   --circle-rad:55px;
@@ -58,6 +58,7 @@
  }
  
  .btn:hover {
+  cursor: pointer;
   color: var(--btn-color);
   background-color: var(--glow-color);
   box-shadow: 0 0 1em .25em var(--glow-color),
@@ -260,7 +261,7 @@ border-radius: 10px;
 .p1,
 .p2{
   position: relative;
-  margin-top: 5px;
+  margin-top: 2px;
   width: 5px;
   height: 5px;
 }
@@ -276,12 +277,12 @@ border-radius: 10px;
   --green: #1BFD9C;
   display: flex;
   flex-direction: row;
-  left:calc(50vw - 105px);
+  /* margin-top: 45px; */
   bottom:calc(2.5vh);
   font-size: 15px;
   padding: 0.7em 2.7em;
   letter-spacing: 0.06em;
-  position: absolute;
+  margin-top: 30px;
   font-family: inherit;
   border-radius: 0.6em;
   overflow: hidden;

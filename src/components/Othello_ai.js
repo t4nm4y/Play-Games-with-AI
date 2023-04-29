@@ -138,7 +138,7 @@ const Othello_ai = () => {
     } else {
       currentPlayer = currentPlayer ^ 1;
       if (!human[currentPlayer] || !hasAvailablePlayer(currentPlayer)) {
-        setTimeout(nextTurn, 500);
+        nextTurn();
       }
     }
   }
@@ -257,11 +257,10 @@ const Othello_ai = () => {
         if (isAvailablePlayer(i, j, currentPlayer)) {
           available.splice(index, 1);
           playAt(i, j, currentPlayer);
+          currentPlayer = currentPlayer ^ 1;
           const newBoard = [...board];
           setBoard(newBoard);
-          currentPlayer = currentPlayer ^ 1;
           nextTurn();
-          // setTimeout(nextTurn, 500);
         }
       }
     }

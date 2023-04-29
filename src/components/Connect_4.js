@@ -91,10 +91,17 @@ const Connect4 = () => {
                 </div>
             );
         }
-        else
+        else if (winner === p2){
         return (<div className={styles.status}>
             <div className={styles.status_wrap}>
             Winner: <span className={styles.status_p2}></span>
+            </div>
+            </div>
+        );
+        }
+        else return (<div className={styles.status}>
+            <div className={styles.status_wrap}>
+            Draw
             </div>
             </div>
         );

@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import '../css/Menu.css';
 import { CSSTransition } from "react-transition-group";
 
+let w = 7;
+let h = 6;
+let p1 = 1; //p1 is ai
+let p2 = 2;
 const Connect4_ai = () => {
 // let depth=5;
     const [isOpen, setIsOpen] = useState(false);
@@ -16,11 +20,7 @@ const Connect4_ai = () => {
     setDifficulty(val);
   };
     const reactNavigator = useNavigate();
-    let [p1] = useState(1); //p1 is ai
-    let [p2] = useState(2);
     let [currentPlayer, setCurrentPlayer] = useState(p1);
-    let w = 7;
-    let h = 6;
     const [board, setBoard] = useState([
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -29,12 +29,22 @@ const Connect4_ai = () => {
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0]
     ]);
+
     useEffect(() => {
         bestMove();
     }, []);
 
     function resetBoard() {
-        window.location.reload()
+        // window.location.reload()
+        setBoard([
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0, 0]
+        ]);
+        setCurrentPlayer(p2);
     }
     function leaveRoom() {
         reactNavigator('/');
@@ -53,7 +63,7 @@ const Connect4_ai = () => {
         }
         return -1;
     }
-    function checkWinner() { //loops through rows, columns, diagonals
+    function checkWinner() {
         for (let y = 0; y < h; y++) {
             for (let x = 0; x < w; x++) {
                 if (p(y, x) !== 0 && p(y, x) === p(y, x + 1) && p(y, x) === p(y, x + 2) && p(y, x) === p(y, x + 3)) {
@@ -71,8 +81,8 @@ const Connect4_ai = () => {
         }
         for (let y = 0; y < h; y++)
             for (let x = 0; x < w; x++)
-                if (p(y, x) === 0) return 0; //no winner yet and not tie
-        return -1; //tie
+                if (p(y, x) === 0) return 0; //no winner and not tie
+        return "tie"; //tie
     }
     function handleClick(i, j) {
         if (checkWinner() === 0 && currentPlayer === p2) {
@@ -87,8 +97,9 @@ const Connect4_ai = () => {
     };
     //___BEST MOVE  MINI MAX ALGO___________________________________________________________________________________________
     let scores = {
-        1: Infinity,
-        2: -Infinity,
+        1: 100,
+        2: -100,
+        tie: 0,
     };
     function bestMove() {
         // AI to make its turn
@@ -97,7 +108,6 @@ const Connect4_ai = () => {
         let tempI;
 
         for (let j = 0; j < w; j++) {
-            // Is the spot available?
             tempI = nextSpace(j);
             if (tempI >= 0) {
                 if (move == null) {
@@ -119,8 +129,9 @@ const Connect4_ai = () => {
         setCurrentPlayer(p2);
     }
 
-    function score_position(player, player2, nr_moves) {
+    function score_position() {
         //heuristic could be more in depth, using 
+        let player=p1, player2=p2;
         let score = 0
         for (let i = 1; i < h; i++) {
             for (let j = 1; j < w; j++) {
@@ -192,16 +203,16 @@ const Connect4_ai = () => {
         return pieces;
     }
 
-    function minimax(board, depth, isMaximizing, nr_moves) {
+    function minimax(board, depth, isMaximizing, moves_taken) {
         let result = checkWinner();
         if (result > 0) {
-            return scores[result] - 20 * nr_moves;
+            return scores[result] - 10 * moves_taken; //to reduce the no. of moves taken
         }
-        if (result === -1) {
-            return 0 - 50 * nr_moves;
+        if (result === 'tie') {
+            return 0 - 10 * moves_taken;
         }
         if (depth === 0) {
-            return score_position(1, 2, nr_moves);
+            return score_position();
         }
         if (isMaximizing) {
             let bestScore = -Infinity;
@@ -209,7 +220,7 @@ const Connect4_ai = () => {
                 let tempI = nextSpace(j);
                 if (tempI < h && tempI > -1) {
                     board[tempI][j] = 1;
-                    let score = minimax(board, depth - 1, false, nr_moves + 1);
+                    let score = minimax(board, depth - 1, false, moves_taken + 1);
                     board[tempI][j] = 0;
                     bestScore = Math.max(score, bestScore);
                 }
@@ -218,11 +229,10 @@ const Connect4_ai = () => {
         } else {
             let bestScore = Infinity;
             for (let j = 0; j < w; j++) {
-                // Is the spot available?
                 let tempI = nextSpace(j);
                 if (tempI < h && tempI > -1) {
                     board[tempI][j] = 2;
-                    let score = minimax(board, depth - 1, true, nr_moves + 1);
+                    let score = minimax(board, depth - 1, true, moves_taken + 1);
                     board[tempI][j] = 0;
                     bestScore = Math.min(score, bestScore);
                 }
@@ -234,12 +244,13 @@ const Connect4_ai = () => {
     //______________________________________________________________________________________________
     const winner = checkWinner();
     let status;
-    if (winner === -1) {
+    if (winner === 'tie') {
         status = "Draw!";
     } else if (winner) {
         if (winner === p1) status = "You Lose :(";
         else status = "You Win!";
     }
+
     const renderStatus = () => {
         if (status)
             return (<div className={styles.status}>{status}</div>

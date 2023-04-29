@@ -3,10 +3,10 @@ import styles from '../css/Othello.module.css';
 import { useNavigate } from 'react-router-dom';
 
 let counts=[2,2];
+const players = ['B', 'W'];
 
 const Othello = () => {
   let available=[];
-  const players = ['B', 'W'];
   const reactNavigator = useNavigate();
     let [currentPlayer,changePlayer]=useState(0);
     let [board, setBoard] = useState([

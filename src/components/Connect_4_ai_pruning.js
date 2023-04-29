@@ -5,24 +5,24 @@ import { useNavigate } from 'react-router-dom';
 import '../css/Menu.css';
 import { CSSTransition } from "react-transition-group";
 
+let w = 7;
+let h = 6;
+let p1 = 1; //p1 is ai
+let p2 = 2;
 const Connect4_ai_pruning = () => {
 // let depth=5;
     const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  const [depth, setDifficulty] = useState(5);
+  const [depth, setDifficulty] = useState(6);
   const handleDifficultyChange = (e) => {
     const val = parseInt(e.target.value);
     setDifficulty(val);
   };
 
     const reactNavigator = useNavigate();
-    let [p1] = useState(1); //p1 is ai
-    let [p2] = useState(2);
-    let [currentPlayer, setCurrentPlayer] = useState(p1);
-    let w = 7;
-    let h = 6;
+    let [currentPlayer, setCurrentPlayer] = useState(p2);
     const [board, setBoard] = useState([
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
@@ -36,7 +36,16 @@ const Connect4_ai_pruning = () => {
     }, []);
 
     function resetBoard() {
-        window.location.reload()
+        // window.location.reload()
+        setBoard([
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0, 0]
+        ]);
+        setCurrentPlayer(p2);
     }
     function leaveRoom() {
         reactNavigator('/');
@@ -55,7 +64,7 @@ const Connect4_ai_pruning = () => {
         }
         return -1;
     }
-    function checkWinner() { //loops through rows, columns, diagonals
+    function checkWinner() {
         for (let y = 0; y < h; y++) {
             for (let x = 0; x < w; x++) {
                 if (p(y, x) !== 0 && p(y, x) === p(y, x + 1) && p(y, x) === p(y, x + 2) && p(y, x) === p(y, x + 3)) {
@@ -73,8 +82,8 @@ const Connect4_ai_pruning = () => {
         }
         for (let y = 0; y < h; y++)
             for (let x = 0; x < w; x++)
-                if (p(y, x) === 0) return 0; //no winner yet and not tie
-        return -1; //tie
+                if (p(y, x) === 0) return 0; //no winner and not tie
+        return 'tie';
     }
     function handleClick(i, j) {
         if (checkWinner() === 0 && currentPlayer === p2) {
@@ -89,8 +98,9 @@ const Connect4_ai_pruning = () => {
     };
     //___BEST MOVE  MINI MAX ALGO___________________________________________________________________________________________
     let scores = {
-        1: Infinity,
-        2: -Infinity,
+        1: 100,
+        2: -100,
+        tie: 0
     };
     function bestMove() {
         // AI to make its turn
@@ -120,8 +130,9 @@ const Connect4_ai_pruning = () => {
         setCurrentPlayer(p2);
     }
 
-    function score_position(player, player2, nr_moves) {
+    function score_position() {
         //heuristic could be more in depth, using 
+        let player=p1, player2=p2;
         let score = 0
         for (let i = 1; i < h; i++) {
             for (let j = 1; j < w; j++) {
@@ -191,16 +202,16 @@ const Connect4_ai_pruning = () => {
         return pieces;
     }
 
-    function minimax(board, depth, isMaximizing, nr_moves, alpha, beta) {
+    function minimax(board, depth, isMaximizing, moves_taken, alpha, beta) {
         let result = checkWinner();
         if (result > 0) {
-            return scores[result] - 20 * nr_moves;
+            return scores[result] - 10 * moves_taken;
         }
-        if (result === -1) {
-            return 0 - 50 * nr_moves;
+        if (result === 'tie') {
+            return 0 - 10 * moves_taken;
         }
         if (depth === 0) {
-            return score_position(1, 2, nr_moves);
+            return score_position();
         }
         if (isMaximizing) {
             let bestScore = -Infinity;
@@ -208,7 +219,7 @@ const Connect4_ai_pruning = () => {
                 let tempI = nextSpace(j);
                 if (tempI < h && tempI > -1) {
                     board[tempI][j] = 1;
-                    let score = minimax(board, depth - 1, false, nr_moves + 1, alpha, beta);
+                    let score = minimax(board, depth - 1, false, moves_taken + 1, alpha, beta);
                     board[tempI][j] = 0;
                     bestScore = Math.max(score, bestScore);
                     //pruning---------------------------------------------
@@ -226,7 +237,7 @@ const Connect4_ai_pruning = () => {
                 let tempI = nextSpace(j);
                 if (tempI < h && tempI > -1) {
                     board[tempI][j] = 2;
-                    let score = minimax(board, depth - 1, true, nr_moves + 1, alpha, beta);
+                    let score = minimax(board, depth - 1, true, moves_taken + 1, alpha, beta);
                     board[tempI][j] = 0;
                     bestScore = Math.min(score, bestScore);
                     //pruning-----------------------------------------
@@ -243,7 +254,7 @@ const Connect4_ai_pruning = () => {
     //______________________________________________________________________________________________
     const winner = checkWinner();
     let status;
-    if (winner === -1) {
+    if (winner === "tie") {
         status = "Draw!";
     } else if (winner) {
         if (winner === p1) status = "You Lose :(";
@@ -378,8 +389,8 @@ const Connect4_ai_pruning = () => {
                   <input
                     type="radio"
                     name="radio"
-                    value="5"
-                    checked={depth === 5}
+                    value="6"
+                    checked={depth === 6}
                     onChange={handleDifficultyChange}
                   />
                   <span>Medium</span>
@@ -388,8 +399,8 @@ const Connect4_ai_pruning = () => {
                   <input
                     type="radio"
                     name="radio"
-                    value="6"
-                    checked={depth === 6}
+                    value="7"
+                    checked={depth === 7}
                     onChange={handleDifficultyChange}
                   />
                   <span>Hard</span>

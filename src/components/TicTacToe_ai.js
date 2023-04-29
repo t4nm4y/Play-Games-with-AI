@@ -64,7 +64,6 @@ const TicTacToe_ai = () => {
         let bestScore = -Infinity;
         let move;
         for (let i = 0; i < 9; i++) {
-            // Is the spot available?
             if (board[i] == null) {
                 board[i] = ai;
                 let score = minimax(board, 0, false);
@@ -82,8 +81,8 @@ const TicTacToe_ai = () => {
     }
 
     let scores = {
-        X: 10,
-        O: -10,
+        X: 100,
+        O: -100,
         tie: 0
     };
 
@@ -99,7 +98,7 @@ const TicTacToe_ai = () => {
                 // Is the spot available?
                 if (board[i] == null) {
                     board[i] = ai;
-                    let score = minimax(board, depth + 1, false);
+                    let score = minimax(board, depth - 1, false);
                     board[i] = null;
                     bestScore = Math.max(score, bestScore);
                 }
@@ -108,10 +107,9 @@ const TicTacToe_ai = () => {
         } else {
             let bestScore = Infinity;
             for (let i = 0; i < 9; i++) {
-                // Is the spot available?
                 if (board[i] === null) {
                     board[i] = human;
-                    let score = minimax(board, depth + 1, true);
+                    let score = minimax(board, depth - 1, true);
                     board[i] = null;
                     bestScore = Math.min(score, bestScore);
                 }

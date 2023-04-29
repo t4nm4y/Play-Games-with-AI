@@ -146,9 +146,9 @@ const Othello_ai = () => {
   function alphabetaAI(player, level, alpha, beta, next) {
     if ((available.length == 0) || (!hasAvailablePlayer(0) && !hasAvailablePlayer(1))) {
       if (counts[player] > counts[player ^ 1]) {
-        return 1000000 + counts[player];
+        return 100 + counts[player];
       } else if (counts[player ^ 1] > counts[player]) {
-        return -1000000 - counts[player ^ 1];
+        return -100 - counts[player ^ 1];
       } else {
         return 0;
       }
@@ -174,7 +174,6 @@ const Othello_ai = () => {
     let saveAvailable = [...available];
     let saveBoard = board.map(row => row.slice(0)); // Deep copy
     let saveCounts = [...counts];
-    // let saveCounts = counts.map(row => counts.slice(0));
 
     for (let spotIndex = 0; spotIndex < saveAvailable.length; spotIndex++) {
       let spot = saveAvailable[spotIndex];
@@ -190,8 +189,6 @@ const Othello_ai = () => {
         }
         available = [...saveAvailable];
         board = saveBoard.map(row => row.slice(0)); // Deep restore
-        // counts = [...saveCounts];
-        // counts = saveCounts.map(row => row.slice(0)); // Deep restore
         counts = saveCounts;
         if (cut(score)) {
           break;

@@ -10,16 +10,16 @@ let h = 6;
 let p1 = 1; //p1 is ai
 let p2 = 2;
 const Connect4_ai_pruning = () => {
-// let depth=5;
+    // let depth=5;
     const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-  const [depth, setDifficulty] = useState(6);
-  const handleDifficultyChange = (e) => {
-    const val = parseInt(e.target.value);
-    setDifficulty(val);
-  };
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+    const [depth, setDifficulty] = useState(6);
+    const handleDifficultyChange = (e) => {
+        const val = parseInt(e.target.value);
+        setDifficulty(val);
+    };
 
     const reactNavigator = useNavigate();
     let [currentPlayer, setCurrentPlayer] = useState(p2);
@@ -43,7 +43,7 @@ const Connect4_ai_pruning = () => {
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0]
+            [0, 0, 1, 0, 0, 0, 0]
         ]);
         setCurrentPlayer(p2);
     }
@@ -114,9 +114,9 @@ const Connect4_ai_pruning = () => {
             if (tempI >= 0) {
                 if (move == null) {
                     move = j;
-                  }
+                }
                 board[tempI][j] = 1;
-                let score = minimax(board, depth, false, 1, -Infinity, Infinity);
+                let score = minimax_pruning(board, depth, false, 1, -Infinity, Infinity);
                 board[tempI][j] = 0;
                 if (score > bestScore) {
                     bestScore = score;
@@ -132,7 +132,7 @@ const Connect4_ai_pruning = () => {
 
     function score_position() {
         //heuristic could be more in depth, using 
-        let player=p1, player2=p2;
+        let player = p1, player2 = p2;
         let score = 0
         for (let i = 1; i < h; i++) {
             for (let j = 1; j < w; j++) {
@@ -202,7 +202,7 @@ const Connect4_ai_pruning = () => {
         return pieces;
     }
 
-    function minimax(board, depth, isMaximizing, moves_taken, alpha, beta) {
+    function minimax_pruning(board, depth, isMaximizing, moves_taken, alpha, beta) {
         let result = checkWinner();
         if (result > 0) {
             return scores[result] - 10 * moves_taken;
@@ -219,13 +219,13 @@ const Connect4_ai_pruning = () => {
                 let tempI = nextSpace(j);
                 if (tempI < h && tempI > -1) {
                     board[tempI][j] = 1;
-                    let score = minimax(board, depth - 1, false, moves_taken + 1, alpha, beta);
+                    let score = minimax_pruning(board, depth - 1, false, moves_taken + 1, alpha, beta);
                     board[tempI][j] = 0;
                     bestScore = Math.max(score, bestScore);
                     //pruning---------------------------------------------
                     alpha = Math.max(bestScore, alpha);
                     if (alpha >= beta) {
-                      break
+                        break
                     }
                 }
             }
@@ -237,13 +237,13 @@ const Connect4_ai_pruning = () => {
                 let tempI = nextSpace(j);
                 if (tempI < h && tempI > -1) {
                     board[tempI][j] = 2;
-                    let score = minimax(board, depth - 1, true, moves_taken + 1, alpha, beta);
+                    let score = minimax_pruning(board, depth - 1, true, moves_taken + 1, alpha, beta);
                     board[tempI][j] = 0;
                     bestScore = Math.min(score, bestScore);
                     //pruning-----------------------------------------
                     beta = Math.min(bestScore, beta);
                     if (alpha >= beta) {
-                         break
+                        break
                     }
                 }
             }
@@ -365,52 +365,52 @@ const Connect4_ai_pruning = () => {
             </div>
 
             <>
-        <button className="diff_btn" onClick={toggleMenu}>AI Difficulty {depth}</button>
-        <CSSTransition
-          in={isOpen}
-          classNames="menu"
-          timeout={200}
-          unmountOnExit
-        >
-          <div className="menu-container">
-            <div className="container">
-              <form>
-                <label>
-                  <input
-                    type="radio"
-                    name="radio"
-                    value="4"
-                    checked={depth === 4}
-                    onChange={handleDifficultyChange}
-                  />
-                  <span>Easy</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="radio"
-                    value="6"
-                    checked={depth === 6}
-                    onChange={handleDifficultyChange}
-                  />
-                  <span>Medium</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="radio"
-                    value="7"
-                    checked={depth === 7}
-                    onChange={handleDifficultyChange}
-                  />
-                  <span>Hard</span>
-                </label>
-              </form>
-            </div>
-          </div>
-        </CSSTransition>
-        {isOpen && <div className="overlay" onClick={toggleMenu} />}
-      </>
+                <button className="diff_btn" onClick={toggleMenu}>AI Difficulty {depth}</button>
+                <CSSTransition
+                    in={isOpen}
+                    classNames="menu"
+                    timeout={200}
+                    unmountOnExit
+                >
+                    <div className="menu-container">
+                        <div className="container">
+                            <form>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="radio"
+                                        value="4"
+                                        checked={depth === 4}
+                                        onChange={handleDifficultyChange}
+                                    />
+                                    <span>Easy</span>
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="radio"
+                                        value="6"
+                                        checked={depth === 6}
+                                        onChange={handleDifficultyChange}
+                                    />
+                                    <span>Medium</span>
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="radio"
+                                        value="7"
+                                        checked={depth === 7}
+                                        onChange={handleDifficultyChange}
+                                    />
+                                    <span>Hard</span>
+                                </label>
+                            </form>
+                        </div>
+                    </div>
+                </CSSTransition>
+                {isOpen && <div className="overlay" onClick={toggleMenu} />}
+            </>
         </div>
     );
 };

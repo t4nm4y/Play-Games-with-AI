@@ -114,15 +114,15 @@ const Othello_ai = () => {
     return false;
   }
 
-  function nextTurn() {
+  function bestMove() {
     let notAvailable = false;
     if (hasAvailablePlayer(currentPlayer)) {
       if (human[currentPlayer]) {
         return null;
       }
       available.sort(() => Math.random() - 0.5);
-      // console.log("aiLevel in nextturn: ", levelAI)
-      let index = alphabetaAI(currentPlayer, levelAI, -Infinity, Infinity, false);
+      // console.log("aiLevel in bestMove: ", levelAI)
+      let index = minimax_pruning(currentPlayer, levelAI, -Infinity, Infinity, false);
       let spot = available.splice(index, 1)[0];
       let i = spot[0];
       let j = spot[1];
@@ -138,12 +138,12 @@ const Othello_ai = () => {
     } else {
       currentPlayer = currentPlayer ^ 1;
       if (!human[currentPlayer] || !hasAvailablePlayer(currentPlayer)) {
-        nextTurn();
+        bestMove();
       }
     }
   }
 
-  function alphabetaAI(player, level, alpha, beta, next) {
+  function minimax_pruning(player, level, alpha, beta, next) {
     if ((available.length == 0) || (!hasAvailablePlayer(0) && !hasAvailablePlayer(1))) {
       if (counts[player] > counts[player ^ 1]) {
         return 100 + counts[player];
@@ -182,7 +182,7 @@ const Othello_ai = () => {
       if (isAvailablePlayer(i, j, player)) {
         available.splice(spotIndex, 1);
         playAt(i, j, player);
-        let score = alphabetaAI(player ^ 1, level - 1, alpha, beta, true);
+        let score = minimax_pruning(player ^ 1, level - 1, alpha, beta, true);
         if (compare(score, minmax)) {
           minmax = score;
           index = spotIndex;
@@ -200,7 +200,7 @@ const Othello_ai = () => {
       if (index >= 0) {
         return minmax;
       } else {
-        return alphabetaAI(player ^ 1, level - 1, alpha, beta, true);
+        return minimax_pruning(player ^ 1, level - 1, alpha, beta, true);
       }
     }
     return index;
@@ -260,7 +260,7 @@ const Othello_ai = () => {
           currentPlayer = currentPlayer ^ 1;
           const newBoard = [...board];
           setBoard(newBoard);
-          nextTurn();
+          bestMove();
         }
       }
     }

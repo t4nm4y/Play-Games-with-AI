@@ -60,10 +60,10 @@ const Connect4 = () => {
         return -1;
     }
 
-    function handleClick(i,j) {
+    function handleClick(i, j) {
         if (checkWinner() === 0) {
-            i=nextSpace(j);
-            if(i<0) return null;
+            i = nextSpace(j);
+            if (i < 0) return null;
             const newBoard = [...board];
             newBoard[i][j] = currentPlayer;
             setBoard(newBoard);
@@ -82,56 +82,56 @@ const Connect4 = () => {
         status = "Winner: Player2";
     }
     const renderStatus = () => {
-        if (status){
-        if (winner === p1){
-            return (<div className={styles.status}>
+        if (status) {
+            if (winner === p1) {
+                return (<div className={styles.status}>
+                    <div className={styles.status_wrap}>
+                        Winner: <span className={styles.status_p1}></span>
+                    </div>
+                </div>
+                );
+            }
+            else if (winner === p2) {
+                return (<div className={styles.status}>
+                    <div className={styles.status_wrap}>
+                        Winner: <span className={styles.status_p2}></span>
+                    </div>
+                </div>
+                );
+            }
+            else return (<div className={styles.status}>
                 <div className={styles.status_wrap}>
-                Winner: <span className={styles.status_p1}></span>
+                    Draw
                 </div>
-                </div>
+            </div>
             );
-        }
-        else if (winner === p2){
-        return (<div className={styles.status}>
-            <div className={styles.status_wrap}>
-            Winner: <span className={styles.status_p2}></span>
-            </div>
-            </div>
-        );
-        }
-        else return (<div className={styles.status}>
-            <div className={styles.status_wrap}>
-            Draw
-            </div>
-            </div>
-        );
         }
     }
     const renderCircle = (i, j) => {
         if (board[i][j] === p1) {
             return (
-                <div className={styles.square} onClick={() => handleClick(i,j)}>
+                <div className={styles.square} onClick={() => handleClick(i, j)}>
                     <span className={styles.circle_p1}></span>
                 </div>
             );
         }
         else if (board[i][j] == p2) {
             return (
-                <div className={styles.square} onClick={() => handleClick(i,j)}>
+                <div className={styles.square} onClick={() => handleClick(i, j)}>
                     <span className={styles.circle_p2}></span>
                 </div>
             );
         }
-        else return <div className={styles.square} onClick={() => handleClick(i,j)}></div>
+        else return <div className={styles.square} onClick={() => handleClick(i, j)}></div>
     };
 
-    const renderCurrPlayer=()=>{
-        if (currentPlayer === p1){
-            return(
+    const renderCurrPlayer = () => {
+        if (currentPlayer === p1) {
+            return (
                 <span className={styles.p1}></span>
             )
         }
-        else return(
+        else return (
             <span className={styles.p2}></span>
         )
     }
@@ -141,7 +141,7 @@ const Connect4 = () => {
                 <button className={styles.btn} onClick={leaveRoom}>Home</button>
                 <button className={styles.btn} onClick={resetBoard}>Reset</button>
             </div>
-            
+
             <div className={styles.board}>
                 <div className={styles.board_vline}></div>
                 <div className={styles.board_vline}></div>
@@ -159,7 +159,7 @@ const Connect4 = () => {
                 <div className={styles.board_hline}></div>
                 <div className={styles.board_hline}></div>
                 <div className={styles.board_hline}></div>
-                
+
                 <div className={styles.board_row}>
                     {renderCircle(0, 0)}
                     {renderCircle(0, 1)}

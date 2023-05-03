@@ -9,16 +9,16 @@ let h = 6;
 let p1 = 1; //p1 is ai
 let p2 = 2;
 const Connect4_ai = () => {
-// let depth=5;
+    // let depth=5;
     const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-  const [depth, setDifficulty] = useState(5);
-  const handleDifficultyChange = (e) => {
-    const val = parseInt(e.target.value);
-    setDifficulty(val);
-  };
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+    const [depth, setDifficulty] = useState(5);
+    const handleDifficultyChange = (e) => {
+        const val = parseInt(e.target.value);
+        setDifficulty(val);
+    };
     const reactNavigator = useNavigate();
     let [currentPlayer, setCurrentPlayer] = useState(p1);
     const [board, setBoard] = useState([
@@ -112,7 +112,7 @@ const Connect4_ai = () => {
             if (tempI >= 0) {
                 if (move == null) {
                     move = j;
-                  }
+                }
                 board[tempI][j] = 1;
                 let score = minimax(board, depth, false, 1);
                 board[tempI][j] = 0;
@@ -131,7 +131,7 @@ const Connect4_ai = () => {
 
     function score_position() {
         //heuristic could be more in depth, using 
-        let player=p1, player2=p2;
+        let player = p1, player2 = p2;
         let score = 0
         for (let i = 1; i < h; i++) {
             for (let j = 1; j < w; j++) {
@@ -355,52 +355,52 @@ const Connect4_ai = () => {
                 <div>{renderStatus()}</div>
             </div>
             <>
-        <button className="diff_btn" onClick={toggleMenu}>AI Difficulty {depth}</button>
-        <CSSTransition
-          in={isOpen}
-          classNames="menu"
-          timeout={200}
-          unmountOnExit
-        >
-          <div className="menu-container">
-            <div className="container">
-              <form>
-                <label>
-                  <input
-                    type="radio"
-                    name="radio"
-                    value="4"
-                    checked={depth === 4}
-                    onChange={handleDifficultyChange}
-                  />
-                  <span>Easy</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="radio"
-                    value="5"
-                    checked={depth === 5}
-                    onChange={handleDifficultyChange}
-                  />
-                  <span>Medium</span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="radio"
-                    value="6"
-                    checked={depth === 6}
-                    onChange={handleDifficultyChange}
-                  />
-                  <span>Hard</span>
-                </label>
-              </form>
-            </div>
-          </div>
-        </CSSTransition>
-        {isOpen && <div className="overlay" onClick={toggleMenu} />}
-      </>
+                <button className="diff_btn" onClick={toggleMenu}>AI Difficulty {depth}</button>
+                <CSSTransition
+                    in={isOpen}
+                    classNames="menu"
+                    timeout={200}
+                    unmountOnExit
+                >
+                    <div className="menu-container">
+                        <div className="container">
+                            <form>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="radio"
+                                        value="4"
+                                        checked={depth === 4}
+                                        onChange={handleDifficultyChange}
+                                    />
+                                    <span>Easy</span>
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="radio"
+                                        value="5"
+                                        checked={depth === 5}
+                                        onChange={handleDifficultyChange}
+                                    />
+                                    <span>Medium</span>
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="radio"
+                                        value="6"
+                                        checked={depth === 6}
+                                        onChange={handleDifficultyChange}
+                                    />
+                                    <span>Hard</span>
+                                </label>
+                            </form>
+                        </div>
+                    </div>
+                </CSSTransition>
+                {isOpen && <div className="overlay" onClick={toggleMenu} />}
+            </>
         </div>
     );
 };

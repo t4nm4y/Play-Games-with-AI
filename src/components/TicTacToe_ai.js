@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from '../css/TicTacToe.module.css';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const TicTacToe_ai = () => {
     const reactNavigator = useNavigate();
@@ -16,7 +16,7 @@ const TicTacToe_ai = () => {
     function resetBoard() {
         window.location.reload()
     }
-    function leaveRoom(){
+    function leaveRoom() {
         reactNavigator('/');
     }
 
